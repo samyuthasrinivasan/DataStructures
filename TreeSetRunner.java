@@ -1,6 +1,111 @@
 public class TreeSetRunner {
-    public TreeSetRunner() {
-        
+    
+     public TreeSetRunner() {
+        //1
+        TreeSet<Integer> treeInt = new TreeSet<Integer>();
+
+        //2
+        while(treeInt.size() < 30){
+            int ran = (int)(Math.random()*100) + 1;
+            treeInt.add(ran);
+            System.out.println(ran);
+        }
+
+        System.out.println("preOrder: " + treeInt.preOrder());
+        System.out.println("inOrder: " + treeInt.inOrder());
+        System.out.println("postOrder: " + treeInt.postOrder());
+
+        //3
+        System.out.println("Size: " + treeInt.size());
+
+        //4
+        TreeSet<Integer> treePre = new TreeSet<Integer>();
+        String s = treeInt.preOrder().substring(1, treeInt.preOrder().length() - 1);
+        String [] arr = s.split(", ");
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treePre.add(n);
+            //tree.remove(n);
+        }
+
+        //5
+        System.out.println("\nReinputting using PreOrder: ");
+        System.out.println("preOrder: " + treePre.preOrder());
+        System.out.println("inOrder: " + treePre.inOrder());
+        System.out.println("postOrder: " + treePre.postOrder());
+
+        //6
+        TreeSet<Integer> treeIn = new TreeSet<Integer>();
+        s = treeInt.inOrder().substring(1, treeInt.inOrder().length() - 2);
+        arr = s.split(", ");
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treeIn.add(n);
+            //tree.remove(n);
+        }
+
+        //7
+        System.out.println("\nReinputting using InOrder: ");
+        System.out.println("preOrder: " + treeIn.preOrder());
+        System.out.println("inOrder: " + treeIn.inOrder());
+        System.out.println("postOrder: " + treeIn.postOrder());
+
+        System.out.println("\b\nSince the same values are inputted now from smallest to largest value, each value inputted is smaller than the next,\ncreating a tree with values only being constantly placed to the right. Therefore, the preOrder traversal will just \nbe the values from smallest to largest, same as inOrder. The PostOrder traversal is the values from largest to \nsmallest value, since it goes to the leaf on the right and works its way up.");
+
+        //8
+        TreeSet<Integer> treePost = new TreeSet<Integer>();
+        s = treeInt.postOrder().substring(1, treeInt.postOrder().length() - 2);
+        arr = s.split(", ");
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treePost.add(n);
+            treeInt.remove(n);
+        }
+
+        //9
+        System.out.println("\nReinputting using PostOrder: ");
+        System.out.println("preOrder: " + treePost.preOrder());
+        System.out.println("inOrder: " + treePost.inOrder());
+        System.out.println("postOrder: " + treePost.postOrder());
+
+        System.out.println("\nThe order of some of the numbers are flipped between preOrder and inOrder- ex: 18,17,8,4,3 for pre, 3,4,8,17,18 for in");
+
+        //10
+        TreeSet<String> treeString = new TreeSet<String>();
+        while(treeString.size() < 20) {
+            int ran = (int)(Math.random()*26)+1;
+            int i = 0;
+            for(char a = 'a'; a <='z'; a++) {
+                i++;
+                if(i == ran) {
+                    treeString.add(a + "");
+                    System.out.println(a);
+                }
+            }
+        }
+
+        //11
+        System.out.println("\npreOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
+
+        //12
+        for(int i = 0; i < 3; i++) {
+            treeString.rotateRight();
+        }
+        System.out.println("\nRight x3 Rotated Tree:");
+        System.out.println("preOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
+
+        //13
+        for(int i = 0; i < 3; i++) {
+            treeString.rotateLeft();
+        }
+        System.out.println("\nLeft x3 Rotated Tree:");
+        System.out.println("preOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
 
     }
 
