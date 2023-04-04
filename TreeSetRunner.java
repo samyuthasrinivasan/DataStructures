@@ -59,7 +59,7 @@ public class TreeSetRunner {
         for(int i = 0;i < arr.length; i++) {
             int n = Integer.parseInt(arr[i]);
             treePost.add(n);
-            treeInt.remove(n);
+            //treeInt.remove(n);
         }
 
         //9
