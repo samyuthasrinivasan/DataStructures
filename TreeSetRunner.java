@@ -1,6 +1,8 @@
+import java.util.ArrayList;
+
 public class TreeSetRunner {
-    
-     public TreeSetRunner() {
+    public TreeSetRunner() {
+
         //1
         TreeSet<Integer> treeInt = new TreeSet<Integer>();
 
@@ -59,7 +61,7 @@ public class TreeSetRunner {
         for(int i = 0;i < arr.length; i++) {
             int n = Integer.parseInt(arr[i]);
             treePost.add(n);
-            //treeInt.remove(n);
+            treeInt.remove(n);
         }
 
         //9
@@ -106,6 +108,41 @@ public class TreeSetRunner {
         System.out.println("preOrder: " + treeString.preOrder());
         System.out.println("inOrder: " + treeString.inOrder());
         System.out.println("postOrder: " + treeString.postOrder());
+
+        //14
+        TreeSet<Integer> newSet = new TreeSet<Integer>();
+        ArrayList<Integer> copy = new ArrayList<>();
+        int count = 0;
+
+        while(newSet.size() < 10) {
+            int ran = (int)(Math.random()*20) + 1;
+            count = newSet.size();
+            newSet.add(ran);
+
+            /* 
+            TO GET RID OF DUPLICATES:
+
+            if(newSet.size() != count) {
+                copy.add(ran);
+            }
+            */
+            copy.add(ran);
+        }
+
+        System.out.println(newSet.inOrder());
+        System.out.println(copy);
+
+        //15 
+        int ran = (int)(Math.random()*copy.size());
+        newSet.remove(copy.get(ran));
+        copy.remove(ran);
+
+        System.out.println(ran);
+
+        //16
+        System.out.println("preOrder: " + newSet.preOrder());
+        System.out.println("inOrder: " + newSet.inOrder());
+        System.out.println("postOrder: " + newSet.postOrder());
 
     }
 
@@ -183,8 +220,7 @@ public class TreeSetRunner {
                                 else 
                                     node.setRight(null);
                             }
-                        } 
-                        if (node.getLeft() != null) {
+                        } else if (node.getLeft() != null) {
                             if (node.getLeft().equals(current)) {
                                 if(current.getLeft() != null)
                                     node.setLeft(current.getLeft());
@@ -198,13 +234,8 @@ public class TreeSetRunner {
                     } else {
                         
                         parent = current;
-                        System.out.println(parent);
                         TreeNode<E> succ = recursiveSuccessor(current.getRight(), value);
-                        System.out.println("Succ" + succ);
-                        System.out.println("Node" + node);
-                        
                         succ.setLeft(current.getLeft());
-                        
 
                         if (node == null) {
                             root = succ;
@@ -215,9 +246,7 @@ public class TreeSetRunner {
                             }
                             root.setRight(parent);
                         } else {
-                            System.out.println(current + " " + node + " " + succ);
                             current = succ;
-
                             if(succ.getValue().compareTo(node.getValue()) < 0)
                                 node.setLeft(succ);
                             else {
