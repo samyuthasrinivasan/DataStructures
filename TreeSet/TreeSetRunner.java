@@ -1,0 +1,477 @@
+import java.util.ArrayList;
+
+public class TreeSetRunner {
+    public TreeSetRunner() {
+
+        //1
+        TreeSet<Integer> treeInt = new TreeSet<Integer>();
+
+        //2
+        while(treeInt.size() < 30){
+            int ran = (int)(Math.random()*100) + 1;
+            treeInt.add(ran);
+            System.out.println(ran);
+        }
+
+        System.out.println("preOrder: " + treeInt.preOrder());
+        System.out.println("inOrder: " + treeInt.inOrder());
+        System.out.println("postOrder: " + treeInt.postOrder());
+
+        //3
+        System.out.println("Size: " + treeInt.size());
+
+        //4
+        TreeSet<Integer> treePre = new TreeSet<Integer>();
+        String s = treeInt.preOrder().substring(1, treeInt.preOrder().length() - 1);
+        String [] arr = s.split(", ");
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treePre.add(n);
+            //tree.remove(n);
+        }
+
+        //5
+        System.out.println("\nReinputting using PreOrder: ");
+        System.out.println("preOrder: " + treePre.preOrder());
+        System.out.println("inOrder: " + treePre.inOrder());
+        System.out.println("postOrder: " + treePre.postOrder());
+
+        //6
+        TreeSet<Integer> treeIn = new TreeSet<Integer>();
+        s = treeInt.inOrder().substring(1, treeInt.inOrder().length() - 2);
+        arr = s.split(", ");
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treeIn.add(n);
+            //tree.remove(n);
+        }
+
+        //7
+        System.out.println("\nReinputting using InOrder: ");
+        System.out.println("preOrder: " + treeIn.preOrder());
+        System.out.println("inOrder: " + treeIn.inOrder());
+        System.out.println("postOrder: " + treeIn.postOrder());
+
+        System.out.println("\b\nSince the same values are inputted now from smallest to largest value, each value inputted is smaller than the next,\ncreating a tree with values only being constantly placed to the right. Therefore, the preOrder traversal will just \nbe the values from smallest to largest, same as inOrder. The PostOrder traversal is the values from largest to \nsmallest value, since it goes to the leaf on the right and works its way up.");
+
+        //8
+        TreeSet<Integer> treePost = new TreeSet<Integer>();
+        s = treeInt.postOrder().substring(1, treeInt.postOrder().length() - 2);
+        arr = s.split(", ");
+        System.out.println(treeInt.size()+" "+treeInt.preOrder());
+        for(int i = 0;i < arr.length; i++) {
+            int n = Integer.parseInt(arr[i]);
+            treePost.add(n);
+            treeInt.remove(n);
+        }
+
+        //9
+        System.out.println("\nReinputting using PostOrder: ");
+        System.out.println("preOrder: " + treePost.preOrder());
+        System.out.println("inOrder: " + treePost.inOrder());
+        System.out.println("postOrder: " + treePost.postOrder());
+
+		System.out.println("TreeInt: "+treeInt.preOrder());
+		System.out.println("TreeInt Size: "+treeInt.size());
+
+        System.out.println("\nThe order of some of the numbers are flipped between preOrder and inOrder- ex: 18,17,8,4,3 for pre, 3,4,8,17,18 for in");
+
+        //10
+        TreeSet<String> treeString = new TreeSet<String>();
+        while(treeString.size() < 20) {
+            int ran = (int)(Math.random()*26)+1;
+            int i = 0;
+            for(char a = 'a'; a <='z'; a++) {
+                i++;
+                if(i == ran) {
+                    treeString.add(a + "");
+                    System.out.println(a);
+                }
+            }
+        }
+
+        //11
+        System.out.println("\npreOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
+
+        //12
+        for(int i = 0; i < 3; i++) {
+            treeString.rotateRight();
+        }
+        System.out.println("\nRight x3 Rotated Tree:");
+        System.out.println("preOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
+
+        //13
+        for(int i = 0; i < 3; i++) {
+            treeString.rotateLeft();
+        }
+        System.out.println("\nLeft x3 Rotated Tree:");
+        System.out.println("preOrder: " + treeString.preOrder());
+        System.out.println("inOrder: " + treeString.inOrder());
+        System.out.println("postOrder: " + treeString.postOrder());
+
+        //14
+        TreeSet<Integer> newSet = new TreeSet<Integer>();
+        ArrayList<Integer> copy = new ArrayList<>();
+        int count = 0;
+
+        while(newSet.size() < 10) {
+            int ran = (int)(Math.random()*20) + 1;
+            count = newSet.size();
+            newSet.add(ran);
+
+            /*
+            TO GET RID OF DUPLICATES:
+
+            if(newSet.size() != count) {
+                copy.add(ran);
+            }
+            */
+            copy.add(ran);
+        }
+
+        System.out.println(newSet.inOrder());
+        System.out.println(copy);
+
+        //15
+        int ran = (int)(Math.random()*copy.size());
+        newSet.remove(copy.get(ran));
+        copy.remove(ran);
+
+        System.out.println(ran);
+
+        //16
+        System.out.println("preOrder: " + newSet.preOrder());
+        System.out.println("inOrder: " + newSet.inOrder());
+        System.out.println("postOrder: " + newSet.postOrder());
+
+    }
+
+    public static void main(String[] args) {
+        TreeSetRunner app = new TreeSetRunner();
+    }
+
+    public class TreeSet<E extends Comparable<E>> {
+        TreeNode<E> root;
+        int size;
+        String output;
+        TreeNode<E> parent;
+        int time = 1;
+
+        public TreeSet() {
+            root = null;
+            size = 0;
+        }
+
+        public void add(E value) {
+            TreeNode<E> temp = new TreeNode<E>(value);
+            if (size == 0 || root == null) {
+                root = temp;
+                size = 1;
+            } else {
+                add(root, temp);
+            }
+
+        }
+
+        public void add(TreeNode<E> t, TreeNode<E> value) {
+            if (t.getValue().compareTo(value.getValue()) > 0) {
+                if (t.getLeft() == null) {
+                    t.setLeft(value);
+                    size++;
+                } else {
+                    add(t.getLeft(), value);
+                }
+            } else if (t.getValue().compareTo(value.getValue()) < 0) {
+                if (t.getRight() == null) {
+                    t.setRight(value);
+                    size++;
+                } else {
+                    add(t.getRight(), value);
+                }
+            }
+        }
+
+        public void remove(E value)
+        {
+            System.out.println("Removing: "+value+"\tRoot: "+root.getValue()+" left: "+root.getLeft()+" right: "+root.getRight());
+            System.out.println("Preorder: "+preOrder()+"\n");
+            if (root.getValue().equals(value) && root.getLeft() == null && root.getRight() == null)
+            {
+                size = 0;
+                root = null;
+            }
+            else if(root.getValue().equals(value) && root.getRight() == null)
+				{
+					root=root.getLeft();
+					size--;
+				}
+				else if(root.getValue().equals(value) && root.getLeft() == null)
+					{
+						TreeNode<E> minOnRight=recursiveSuccessor(root.getRight());
+						TreeNode<E> rightOfMin=minOnRight.getRight();
+						minOnRight.setLeft(null);
+						root.getRight().setLeft(rightOfMin);
+						minOnRight.setRight(root.getRight());
+						this.root=minOnRight;
+						size--;
+					}
+					else
+					{
+						remove(root, null, value);
+					}
+        }
+
+        public void remove(TreeNode<E> current, TreeNode<E> node, E value)
+        {
+            if(current==null)
+            	return;
+
+			if (value.compareTo(current.getValue()) > 0)
+			{
+				remove(current.getRight(), current, value);
+			}
+			else if (value.compareTo(current.getValue()) < 0)
+			{
+				remove(current.getLeft(), current, value);
+			}
+			else
+			{
+				if(node == null)
+				{
+					parent = current;
+					TreeNode<E> succ = recursiveSuccessor(current.getRight());
+
+					if(succ.getLeft() != null)
+					{
+						parent.setRight(succ.getLeft());
+					}
+				}
+				else if(current.getRight() == null && current.getLeft() == null)
+					{
+
+						if(node.getRight() != null)
+						{
+							if (node.getRight().equals(current))
+							{
+								node.setRight(null);
+							}
+						}
+
+						if(node.getLeft() != null)
+						{
+							if (node.getLeft().equals(current))
+							{
+								node.setLeft(null);
+							}
+						}
+
+				}
+				else if (current.getRight() == null)
+					{
+						if(node.getLeft() != null)
+						{
+							if (node.getLeft().equals(current))
+							{
+								node.setLeft(current.getLeft());
+							}
+						}
+						if(node.getRight() != null)
+						{
+							if(node.getRight().equals(current))
+							node.setRight(current.getLeft());
+						}
+
+					}
+					else if (current.getLeft() == null)
+						{
+
+							if(node.getRight() != null)
+							{
+								if (node.getRight().equals(current))
+								{
+									node.setRight(current.getRight());
+								}
+							}
+
+							if(node.getLeft() != null)
+							{
+								if (node.getLeft().equals(current))
+								{
+									node.setLeft(current.getRight());
+								}
+							}
+
+						}
+						else
+						{
+							parent = current;
+							TreeNode<E> succ = recursiveSuccessor(current.getRight());
+							succ.setLeft(current.getLeft());
+							current = succ;
+							if(succ.getValue().compareTo(node.getValue()) < 0)
+								node.setLeft(succ);
+							else
+							{
+								node.setRight(succ);
+							}
+
+						}
+						size--;
+			}
+
+      }
+
+        public TreeNode<E> recursiveSuccessor(TreeNode<E> current) {
+
+            if (current.getLeft() != null) {
+                parent = current;
+                return recursiveSuccessor(current.getLeft());
+            } else
+                return current;
+
+
+        }
+
+        public String preOrder(TreeNode<E> temp) {
+
+            if(size == 0) {
+                return "[]";
+            }
+
+            if (temp != null) {
+                output += temp.getValue() + ", ";
+                preOrder(temp.getLeft());
+                preOrder(temp.getRight());
+            }
+
+            return output.substring(0, output.length() - 2) + "]";
+        }
+
+        public String preOrder() {
+            output = "[";
+            return preOrder(root);
+        }
+
+        public String inOrder(TreeNode<E> temp) {
+
+            if(size == 0) {
+                return "[]";
+            }
+
+            if (temp != null) {
+                inOrder(temp.getLeft());
+                output += temp.getValue() + ", ";
+                inOrder(temp.getRight());
+            }
+
+            return output.substring(0, output.length() - 1) + "]";
+        }
+
+        public String inOrder() {
+            output = "[";
+            return inOrder(root);
+        }
+
+        public String postOrder(TreeNode<E> temp) {
+
+            if(size == 0) {
+                return "[]";
+            }
+
+            if (temp != null) {
+                postOrder(temp.getLeft());
+                postOrder(temp.getRight());
+                output += temp.getValue() + ", ";
+            }
+
+            return output.substring(0, output.length() - 1) + "]";
+        }
+
+        public String postOrder() {
+            output = "[";
+            return postOrder(root);
+        }
+
+        public void rotateLeft(){
+            if(root.getRight() != null) {
+                rotateLeft(root.getRight());
+            }
+        }
+
+        public void rotateLeft(TreeNode<E> value) {
+            if(value.getLeft() == null)
+                root.setRight(null);
+            else
+                root.setRight(value.getLeft());
+
+            value.setLeft(root);
+            root = value;
+
+        }
+
+        public void rotateRight(){
+            if(root.getLeft() != null) {
+                rotateRight(root.getLeft());
+            }
+        }
+
+        public void rotateRight(TreeNode<E> value) {
+            if(value.getRight() == null)
+                root.setLeft(null);
+            else
+                root.setLeft(value.getRight());
+
+            value.setRight(root);
+            root = value;
+        }
+
+        public int size() {
+            return size;
+        }
+
+    }
+
+    public class TreeNode<E extends Comparable<E>> {
+        TreeNode<E> left, right;
+        E value;
+
+        public TreeNode(E val) {
+            value = val;
+            left = null;
+            right = null;
+        }
+
+        public TreeNode<E> getRight() {
+            return right;
+        }
+
+        public TreeNode<E> getLeft() {
+            return left;
+        }
+
+        public void setRight(TreeNode<E> right) {
+            this.right = right;
+        }
+
+        public void setLeft(TreeNode<E> left) {
+            this.left = left;
+        }
+
+        public void setValue(E value) {
+            this.value = value;
+        }
+
+        public E getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return value + "";
+        }
+    }
+}
